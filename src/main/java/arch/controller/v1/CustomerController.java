@@ -40,9 +40,14 @@ public class CustomerController {
 
     @GetMapping("/worklist")
     public ResponseEntity<String> getWorkList(@RequestHeader("sessionId") String sessionId) {
-        Customer customer = workspace.getCustomer(sessionId);
-        Set<WorkList> workList = database.getWorkList(customer.getId(), customer.getRole());
-        return ResponseEntity.ok(gson.toJson(workList));
+        try {
+            Customer customer = workspace.getCustomer(sessionId);
+            Set<WorkList> workList = database.getWorkList(customer.getId(), customer.getRole());
+            return ResponseEntity.ok(gson.toJson(workList));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(gson.toJson(new RequestResponse(true, "Logout error, " + e.getMessage())));
+        }
     }
 
     @DeleteMapping("/logout")
@@ -51,7 +56,8 @@ public class CustomerController {
             workspace.removeUser(sessionId);
             return ResponseEntity.ok(gson.toJson(new RequestResponse(true)));
         } catch (Exception e) {
-            return ResponseEntity.ok(gson.toJson(new RequestResponse(true, "Logout error, " + e.getMessage())));
+            return ResponseEntity.badRequest()
+                    .body(gson.toJson(new RequestResponse(true, "Logout error, " + e.getMessage())));
         }
     }
 }
