@@ -1,17 +1,16 @@
 package arch.entity.database;
 
+import arch.entity.customer.WorkList;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "Customers")
+@Table(name = "F_CUSTOMERS")
 public class CustomerEntity {
     @Id
     @Column(name = "ID")
@@ -35,4 +34,7 @@ public class CustomerEntity {
     @Column(name = "MSISDN")
     private long msisdn;
 
+    @OneToMany
+    @JoinColumn(name = "ID", referencedColumnName = "CUSTOMER_ID")
+    private Set<OrderEntity> orderEntities;
 }

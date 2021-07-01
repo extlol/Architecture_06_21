@@ -1,15 +1,16 @@
 package arch.entity.database;
 
+import arch.entity.factory.OrderStatus;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
+@Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "Orders")
+@Table(name = "F_ORDERS")
 public class OrderEntity {
     @Id
     @Column(name = "ID")
@@ -22,7 +23,7 @@ public class OrderEntity {
     private Float money;
 
     @Column(name = "CUSTOMER_ID")
-    private String description;
+    private Integer customerId;
 
     @Column(name = "MANAGER_ORDER")
     private Integer managerOrder;
@@ -30,4 +31,17 @@ public class OrderEntity {
     @Column(name = "LOGIST_ORDER")
     private Integer logistOrder;
 
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    @OneToMany
+    @JoinColumn(name = "ID", referencedColumnName = "ORDER_ID")
+    private Set<RequirementsEntity> requirementsEntities;
+
+    public OrderEntity(String status, int customerId, String description, Float money) {
+        this.status = status;
+        this.customerId = customerId;
+        this.description = description;
+        this.money = money;
+    }
 }

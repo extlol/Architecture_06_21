@@ -1,16 +1,15 @@
 package arch;
 
-import arch.entity.Customer;
-import arch.entity.Role;
+import arch.entity.customer.Authentication;
+import arch.entity.customer.Customer;
+import arch.entity.customer.Role;
 import arch.entity.database.CustomerEntity;
 import arch.service.DatabaseService;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Optional;
 
 @Component
 public class Workspace {
@@ -23,13 +22,13 @@ public class Workspace {
         users = new HashMap<>();
     }
 
-    public void authUser(String sessionId, String login, String password) {
-        CustomerEntity customer = database.getCustomer(login);
-        if (Objects.equals(customer.getPassword().hashCode(), password.hashCode())) {
+    public void authUser(String sessionId, Authentication authentication) {
+        CustomerEntity customer = database.getCustomer(authentication.getLogin());
+        if (Objects.equals(customer.getPassword().hashCode(), authentication.getPassword().hashCode())) {
             addUser(sessionId, new Customer(
                     customer.getId(),
                     sessionId,
-                    login,
+                    authentication.getLogin(),
                     Role.valueOf(customer.getRole()),
                     customer.getFirstName(),
                     customer.getSecondName(),

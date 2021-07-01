@@ -1,7 +1,11 @@
-package arch.entity;
+package arch.entity.customer;
+
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public class Customer {
     private int id;
@@ -11,4 +15,5 @@ public class Customer {
     private String firstName;
     private String secondName;
     private long msisdn;
+    private Set<WorkList> workList;
 }

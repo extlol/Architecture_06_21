@@ -1,4 +1,4 @@
-package arch.entity;
+package arch.entity.customer;
 
 public enum Role {
     MANAGER,
