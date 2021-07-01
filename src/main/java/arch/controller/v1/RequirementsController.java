@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Log4j2
 @RestController
-@RequestMapping("factory/v1/requirement")
+@RequestMapping("v1/requirement")
 public class RequirementsController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

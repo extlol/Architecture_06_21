@@ -32,7 +32,8 @@ public class Workspace {
                     Role.valueOf(customer.getRole()),
                     customer.getFirstName(),
                     customer.getSecondName(),
-                    customer.getMsisdn()
+                    customer.getMsisdn(),
+                    database.getWorkList(customer.getId(), Role.valueOf(customer.getRole()))
             ));
         } else {
             throw new SecurityException("Password incorrect");

@@ -1,5 +1,9 @@
 package arch.entity.customer;
 
-public interface WorkList {
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
+public class WorkList {
+    private Integer id;
+    private String status;
 }

@@ -3,14 +3,12 @@ package arch.controller.v1;
 import arch.Workspace;
 import arch.entity.RequestResponse;
 import arch.entity.customer.Customer;
-import arch.entity.customer.CustomerOrder;
 import arch.entity.factory.FactoryOrder;
 import arch.service.DatabaseService;
 
 import com.google.gson.Gson;
 
 import javax.validation.Valid;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,18 +26,6 @@ public class OrderController {
     public OrderController(DatabaseService database, Workspace workspace) {
         this.database = database;
         this.workspace = workspace;
-    }
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getOrder(@RequestHeader String sessionId,
-                                           @RequestParam(required = false) String status) {
-        try {
-            Set<CustomerOrder> customerOrders = database.getOrderByCustomer(workspace.getCustomer(sessionId).getId());
-            return ResponseEntity.ok(gson.toJson(customerOrders));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(gson.toJson(
-                    new RequestResponse(false, "Error get order, " + e.getMessage())));
-        }
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

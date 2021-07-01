@@ -1,16 +1,16 @@
 package arch.entity.customer;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
-public class CustomerRequirements implements WorkList {
-    private Integer id;
+public class CustomerRequirements extends WorkList {
     private Integer workingCustomer;
     private String specification;
-    private String status;
+
+    public CustomerRequirements(Integer id, String status, Integer workingCustomer, String specification) {
+        super(id, status);
+        this.workingCustomer = workingCustomer;
+        this.specification = specification;
+    }
 
     public CustomerRequirements(Integer id, String status) {
-        this.id = id;
-        this.status = status;
+        super(id, status);
     }
 }

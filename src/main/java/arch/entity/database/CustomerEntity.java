@@ -1,11 +1,11 @@
 package arch.entity.database;
 
-import arch.entity.customer.WorkList;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.Set;
 
 import javax.persistence.*;
-import java.util.Set;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
