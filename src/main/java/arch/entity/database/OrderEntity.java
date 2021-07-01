@@ -1,11 +1,11 @@
 package arch.entity.database;
 
-import arch.entity.factory.OrderStatus;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.Set;
 
 import javax.persistence.*;
-import java.util.Set;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity

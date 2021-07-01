@@ -5,6 +5,7 @@ import arch.entity.database.CustomerEntity;
 import arch.entity.database.OrderEntity;
 import arch.entity.database.RequirementsEntity;
 import arch.entity.factory.FactoryOrder;
+import arch.entity.factory.FactoryRequirements;
 import arch.entity.factory.OrderStatus;
 import arch.reposetory.CustomerJPA;
 import arch.reposetory.OrderJPA;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static arch.entity.factory.OrderStatus.ORDER_SEND;
+import static arch.entity.factory.RequirementStatus.*;
 
 @Service
 public class DatabaseService {
@@ -62,6 +64,22 @@ public class DatabaseService {
                 x.getSpecification()
                 )).collect(Collectors.toSet()
         );
+    }
+
+    public void createRequirements(FactoryRequirements requirements) {
+        requirementJPA.save(new RequirementsEntity(
+                requirements.getOrderId(),
+                INACTIVE.name(),
+                requirements.getSpecification())
+        );
+    }
+
+    public void workInRequirement(int customerId, int requirementId) {
+        requirementJPA.workInRequirements(customerId, ACTIVE.name(), requirementId);
+    }
+
+    public void endRequirement(int requirementId) {
+        requirementJPA.endRequirements(DONE.name(), requirementId);
     }
 
     private Set<WorkList> workList(Set<OrderEntity> orders) {

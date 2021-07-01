@@ -1,12 +1,12 @@
 package arch.entity.database;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
@@ -28,4 +28,10 @@ public class RequirementsEntity {
 
     @Column(name = "STATUS")
     private String status;
+
+    public RequirementsEntity(Integer orderId, String status, String specification) {
+        this.orderId = orderId;
+        this.status = status;
+        this.specification = specification;
+    }
 }

@@ -1,23 +1,23 @@
-package arch;
+package arch.service;
 
 import arch.entity.customer.Authentication;
 import arch.entity.customer.Customer;
 import arch.entity.customer.Role;
 import arch.entity.database.CustomerEntity;
-import arch.service.DatabaseService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 @Component
-public class Workspace {
+public class WorkspaceService {
     private final DatabaseService database;
     private final HashMap<String, Customer> users;
 
     @Autowired
-    public Workspace(DatabaseService database) {
+    public WorkspaceService(DatabaseService database) {
         this.database = database;
         users = new HashMap<>();
     }

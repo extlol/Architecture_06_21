@@ -1,6 +1,6 @@
 package arch.controller.v1;
 
-import arch.Workspace;
+import arch.service.WorkspaceService;
 import arch.entity.RequestResponse;
 import arch.entity.customer.Customer;
 import arch.entity.factory.FactoryOrder;
@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     private final Gson gson = new Gson();
     private final DatabaseService database;
-    private final Workspace workspace;
+    private final WorkspaceService workspace;
 
     @Autowired
-    public OrderController(DatabaseService database, Workspace workspace) {
+    public OrderController(DatabaseService database, WorkspaceService workspaceService) {
         this.database = database;
-        this.workspace = workspace;
+        this.workspace = workspaceService;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

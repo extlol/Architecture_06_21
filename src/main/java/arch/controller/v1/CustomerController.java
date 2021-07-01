@@ -1,6 +1,6 @@
 package arch.controller.v1;
 
-import arch.Workspace;
+import arch.service.WorkspaceService;
 import arch.entity.RequestResponse;
 import arch.entity.customer.Authentication;
 import arch.entity.customer.Customer;
@@ -22,13 +22,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("v1/customer")
 public class CustomerController {
     private final Gson gson = new Gson();
-    private final Workspace workspace;
+    private final WorkspaceService workspace;
     private final DatabaseService database;
 
-
     @Autowired
-    public CustomerController(Workspace workspace, DatabaseService database) {
-        this.workspace = workspace;
+    public CustomerController(WorkspaceService workspaceService, DatabaseService database) {
+        this.workspace = workspaceService;
         this.database = database;
     }
 
