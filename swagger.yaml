@@ -1,0 +1,385 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: 'http://localhost:4255'
+    description: Generated server url
+paths:
+  /v1/requirement:
+    get:
+      tags:
+        - requirements-controller
+      summary: Get user requirement
+      operationId: getRequirement
+      parameters:
+        - name: sessionId
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Response user requirement
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerRequirements'
+        '400':
+          description: Failed create requirement
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+    put:
+      tags:
+        - requirements-controller
+      summary: Took the job requirement
+      operationId: workInRequirement
+      parameters:
+        - name: sessionId
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int32
+        required: true
+      responses:
+        '200':
+          description: Successful took the job requirement
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+        '400':
+          description: Failed took the job requirement
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+    post:
+      tags:
+        - requirements-controller
+      summary: Create requirement
+      operationId: createRequirement
+      parameters:
+        - name: sessionId
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FactoryRequirements'
+        required: true
+      responses:
+        '200':
+          description: Successful create requirement
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+        '400':
+          description: Failed create requirement
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+  /v1/order:
+    put:
+      tags:
+        - order-controller
+      summary: Send order
+      operationId: sendOrder
+      parameters:
+        - name: sessionId
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int32
+        required: true
+      responses:
+        '200':
+          description: Successfully send Order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+        '400':
+          description: Failed send order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+    post:
+      tags:
+        - order-controller
+      summary: createOrder
+      operationId: createOrder
+      parameters:
+        - name: sessionId
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FactoryOrder'
+        required: true
+      responses:
+        '200':
+          description: Successfully create Order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+        '400':
+          description: Incorrect data for create order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+  /v1/order/cancel:
+    put:
+      tags:
+        - order-controller
+      summary: Cancel order
+      operationId: cancelOrder
+      parameters:
+        - name: sessionId
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FactoryOrder'
+        required: true
+      responses:
+        '200':
+          description: Successfully create Order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+        '400':
+          description: Failed cancel order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+  /v1/customer/auth:
+    post:
+      tags:
+        - customer-controller
+      summary: Login user
+      operationId: auth
+      parameters:
+        - name: sessionId
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Authentication'
+        required: true
+      responses:
+        '200':
+          description: Successfully login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          description: Incorrect data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+    delete:
+      tags:
+        - customer-controller
+      summary: Logout user by session id
+      operationId: logout
+      parameters:
+        - name: sessionId
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully logout
+          content:
+            '*/*':
+              schema:
+                type: string
+        '400':
+          description: 'User not found '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+  /v1/customer/worklist:
+    get:
+      tags:
+        - customer-controller
+      summary: getWorkList
+      operationId: getWorkList
+      parameters:
+        - name: sessionId
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Response work list from user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkList'
+        '400':
+          description: Error find user worklist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+  '/v1/requirement/{id}':
+    delete:
+      tags:
+        - requirements-controller
+      summary: End requirement
+      operationId: endRequirement
+      parameters:
+        - name: sessionId
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successfully end requirement
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+        '400':
+          description: Failed end requirement
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestResponse'
+components:
+  schemas:
+    RequestResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        successful:
+          type: boolean
+    FactoryOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        description:
+          type: string
+        money:
+          type: number
+          format: float
+    FactoryRequirements:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          format: int32
+        specification:
+          type: string
+    Authentication:
+      required:
+        - login
+        - password
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        sessionId:
+          type: string
+        login:
+          type: string
+        role:
+          type: string
+          enum:
+            - MANAGER
+            - CLIENT
+            - LOGIST
+            - ENGINEER
+        firstName:
+          type: string
+        secondName:
+          type: string
+        msisdn:
+          type: integer
+          format: int64
+        workList:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkList'
+    WorkList:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        status:
+          type: string
+    CustomerRequirements:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        status:
+          type: string
