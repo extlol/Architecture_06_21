@@ -24,6 +24,6 @@ SC2 - использовать базу данных Oracle
 
 Web-приложение SPA выбрано для доступа к приложению как с мобильного так и стационарного устройства
 
-Документ API генерится исходя из параметров прописанных в контроллерах
-Пример сформированного API в [swagger.yaml](https://github.com/extlol/Architecture_06_21/blob/main/swagger.yaml)
+Документ API генерится исходя из параметров прописанных в контроллерах  
+Пример сформированного API в [swagger.yaml](https://github.com/extlol/Architecture_06_21/blob/main/swagger.yaml)  
 Контент необходимо вставить на [swagger.io](https://editor.swagger.io/)
