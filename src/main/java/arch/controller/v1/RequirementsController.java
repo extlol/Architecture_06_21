@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Log4j2
+@CrossOrigin
 @RestController
 @RequestMapping("v1/requirement")
 public class RequirementsController {
@@ -41,7 +42,7 @@ public class RequirementsController {
     @Operation(summary = "Get user requirement")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Response user requirement",
-                    content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             array = @ArraySchema(schema = @Schema(implementation = CustomerRequirements.class)))}),
             @ApiResponse(responseCode = "400", description = "Failed create requirement")
     })
@@ -52,7 +53,7 @@ public class RequirementsController {
     @Operation(summary = "Create requirement")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful create requirement",
-                    content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = RequestResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Failed create requirement")
     })
@@ -71,7 +72,7 @@ public class RequirementsController {
     @Operation(summary = "Took the job requirement")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful took the job requirement",
-                    content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = RequestResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Failed took the job requirement")
     })
@@ -89,7 +90,7 @@ public class RequirementsController {
     @Operation(summary = "End requirement")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully end requirement",
-                    content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = RequestResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Failed end requirement")
     })

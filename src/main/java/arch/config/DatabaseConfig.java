@@ -24,5 +24,5 @@ public class DatabaseConfig {
                 .url("jdbc:oracle:thin:@localhost:1521:test")
                 .build();
     }
-
 }
+

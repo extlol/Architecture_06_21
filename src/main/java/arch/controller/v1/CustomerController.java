@@ -26,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Log4j2
+@CrossOrigin
 @RestController
 @RequestMapping("v1/customer")
 public class CustomerController {
@@ -37,6 +38,16 @@ public class CustomerController {
     public CustomerController(WorkspaceService workspaceService, DatabaseService database) {
         this.workspace = workspaceService;
         this.database = database;
+    }
+
+    @RequestMapping("/")
+    public String index() {
+        return "index";
+    }
+
+    @GetMapping("/workspace")
+    public String workspace() {
+        return "workspace";
     }
 
     @Operation(summary = "Login user")

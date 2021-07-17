@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workspace</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<style>
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul li {
+        border: 1px solid #ddd;
+        margin-top: -1px;
+        background-color: #f6f6f6;
+        padding: 12px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: space-between;
+        flex-wrap: wrap;
+    }
+</style>
+<body onload="loadWorkspace()">
+<div id="workspace"></div>
+</body>
+<script type="text/javascript">
+    const server = 'http://localhost:4255/v1/';
+    const newElement = (name) => document.createElement(name);
+
+    const cancelOrder = (id) => {
+        fetch(`${server}order/cancel`, {
+            method: 'PUT',
+            cache: 'no-cache',
+            mode: 'cors',
+            headers: {
+                'sessionId': document.cookie,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id})
+        })
+    }
+
+    const loadWorkspace = () => {
+        fetch(`${server}customer/worklist`, {
+            method: 'GET',
+            cache: 'no-cache',
+            mode: 'cors',
+            headers: {
+                'sessionId': document.cookie,
+                'Content-Type': 'application/json'
+            },
+        })
+            .then((response) => {
+                if (response.ok) {
+                    let ul = document.createElement('ul');
+                    ul.setAttribute("id", "worklist")
+                    response.json().then(data => {
+                            data.map(x => {
+                                let li = newElement('li');
+                                li.setAttribute("id", x.id);
+                                ul.appendChild(li);
+                                let element = newElement('div');
+                                element.textContent = `Requirement #${x.id} - ${x.status}`;
+                                li.appendChild(element);
+                                let deleteButton = newElement("button");
+                                deleteButton.setAttribute("id", "delete-requirement");
+                                deleteButton.setAttribute("type", "button");
+                                deleteButton.textContent = "Delete requirement";
+                                deleteButton.onclick = (() => cancelOrder(x.id));
+                                li.appendChild(deleteButton);
+                            });
+                            document.getElementById("workspace").appendChild(ul);
+                        }
+                    )
+                }
+            }).catch((exception) => {
+                let element = newElement("div");
+                element.textContent = `Error working ${exception}`
+        });
+    }
+</script>
+</html>

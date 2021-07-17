@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+    <title>Auth page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<form name="auth">
+    <div class="container">
+        <label for="login"></label><input id="login" type="text" placeholder="Enter Username" name="login" required>
+        <label for="password"></label><input id="password" type="text" placeholder="Enter Password" name="password" required>
+        <button id="submit" type="button" onclick="authCustomer()">Login</button>
+    </div>
+</form>
+</body>
+</html>
+
+<script type="text/javascript">
+    const authCustomer = () => {
+        const server = 'http://localhost:4255/v1'
+        fetch(`${server}/customer/auth`, {
+            method: 'POST',
+            cache: 'no-cache',
+            mode: 'cors',
+            headers: {
+                'sessionId': document.cookie,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                login: document.getElementById('login').value,
+                password: document.getElementById('password').value,
+            })
+        })
+            .then((response) => {
+                response.ok && window.location.replace(`${server}/customer/workspace`)
+            })
+    }
+</script>
